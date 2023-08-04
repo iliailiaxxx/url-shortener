@@ -7,4 +7,4 @@ import { UrlModule } from '../url/url.module';
   imports: [DatabaseModule, UrlModule],
   providers: [WordsService],
 })
-export class WordsModule {} 
+export class WordsModule {}

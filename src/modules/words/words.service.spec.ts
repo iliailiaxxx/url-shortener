@@ -35,7 +35,9 @@ describe('WordsService', () => {
   describe('alreadyExist', () => {
     it('should return true if the short URL exists in the database', async () => {
       const mockShortUrl = '/mock-url';
-      jest.spyOn(urlService, 'getByShortUrl').mockResolvedValue({ shortUrl: mockShortUrl } as any);
+      jest
+        .spyOn(urlService, 'getByShortUrl')
+        .mockResolvedValue({ shortUrl: mockShortUrl } as any);
 
       const result = await wordsService['alreadyExist'](mockShortUrl);
 
@@ -56,11 +58,13 @@ describe('WordsService', () => {
     it('should throw BadRequestException if an error occurs during database fetch', async () => {
       const mockShortUrl = '/mock-url';
       const errorMessage = 'Database connection error';
-      jest.spyOn(urlService, 'getByShortUrl').mockRejectedValue(new Error(errorMessage));
+      jest
+        .spyOn(urlService, 'getByShortUrl')
+        .mockRejectedValue(new Error(errorMessage));
 
-      await expect(wordsService['alreadyExist'](mockShortUrl)).rejects.toThrowError(
-        BadRequestException,
-      );
+      await expect(
+        wordsService['alreadyExist'](mockShortUrl),
+      ).rejects.toThrowError(BadRequestException);
       expect(urlService.getByShortUrl).toHaveBeenCalledWith(mockShortUrl);
     });
   });
@@ -77,8 +81,10 @@ describe('WordsService', () => {
     });
 
     it('should append a random number to the URL if it already exists', async () => {
-      const existingUrl = '/blue-bird';
-      jest.spyOn(wordsService, 'alreadyExist').mockResolvedValueOnce(true).mockResolvedValue(false);
+      jest
+        .spyOn(wordsService, 'alreadyExist')
+        .mockResolvedValueOnce(true)
+        .mockResolvedValue(false);
 
       const randomUrl = await wordsService.getRandomUrl();
 

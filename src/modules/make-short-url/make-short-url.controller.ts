@@ -2,7 +2,6 @@ import { Body, Controller, Get, Post, Request, Response } from '@nestjs/common';
 import { MakeShortUrlService } from './make-short-url.service';
 import { UrlDTO } from './dto/url-dto';
 import { ApiTags } from '@nestjs/swagger';
-import { json } from 'stream/consumers';
 
 @Controller()
 export class MakeShortUrlController {
@@ -13,9 +12,9 @@ export class MakeShortUrlController {
   async returnShortUrl(
     @Body() dto: UrlDTO,
     @Request() req: Request,
-  ): Promise<Object> {
-    let shortUrl = await this.makeShortUrlService.makeShortUrl(dto.url, req);
-    return { shortUrl }
+  ): Promise<UrlDTO> {
+    const shortUrl = await this.makeShortUrlService.makeShortUrl(dto.url, req);
+    return { url: shortUrl };
   }
   @Get('*')
   @ApiTags('API')
